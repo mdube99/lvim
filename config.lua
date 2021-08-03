@@ -109,7 +109,7 @@ lvim.plugins = {
     require "surround".setup {}
     end,
     },
-    { "RRethy/nvim-base16"},
+    { "RRethy/nvim-base16" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -121,12 +121,24 @@ lvim.plugins = {
 vim.cmd [[
     nnoremap <silent> <ESC> :nohl<CR>
     nnoremap Y y$
+    nnoremap n nzzzv
+    nnoremap N Nzzzv
+    nnoremap J mzJ`z
     nnoremap <F1> <Nop>
+
+    inoremap , ,<C-g>u
+    inoremap . .<C-g>u
+    inoremap ! !<C-g>u
+    inoremap ? ?<C-g>u
+
+    nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+    nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
+
     tnoremap <Esc> <C-\\><C-n>
 
     function! FixLastSpellingError()
@@ -144,5 +156,4 @@ vim.cmd [[
     let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
     let g:instant_markdown_browser = 'surf'
 
-    let g:workbench_storage_path = getenv('HOME') . '/vimwiki/workbench/'
 ]]
