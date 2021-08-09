@@ -19,46 +19,51 @@ vim.g.instant_markdown_autostart = false
 -- keymappings
 lvim.leader = "space"
 
-lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
+lvim.keys.normal_mode["<esc>"] = "<cmd>nohlsearch<cr>"
 lvim.keys.normal_mode["Y"] = "y$"
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 lvim.keys.normal_mode["J"] = "mzJ`z"
-lvim.keys.normal_mode["F1"] = "<Nop>"
+lvim.keys.normal_mode["<F1>"] = "<Nop>"
+lvim.keys.normal_mode["H"] = "0"
+lvim.keys.normal_mode["L"] = "$"
+lvim.keys.normal_mode["<TAB>"] = ":bnext<CR>"
+lvim.keys.normal_mode["<S-TAB>"] = ":bprevious<CR>"
+-- back space to switch to alternative buffer with the cursor in the last position it was in the file
+lvim.keys.normal_mode["<bs>"] = "<bs> <c-^>`”zz"
+
 lvim.keys.insert_mode[","] = ",<C-g>u"
 lvim.keys.insert_mode["."] = ".<C-g>u"
 lvim.keys.insert_mode["!"] = "!<C-g>u"
 lvim.keys.insert_mode["?"] = "?<C-g>u"
 
--- overwrite the key-mappings provided by LunarVim for any mode, or leave it empty to keep them
-lvim.keys.normal_mode = {
---   Navigate buffers
-    {'<Tab>', ':bnext<CR>'},
-    {'<S-Tab>', ':bprevious<CR>'},
+lvim.keys.term_mode["<Esc>"] = "C-\\><C-n"
+
+
+-- whichkey
+lvim.builtin.which_key.mappings.s.p = { ":call FixLastSpellingError<CR>", "Fix last Spelling error" }
+lvim.builtin.which_key.mappings.s.s = { ":setlocal spell!<CR>", "Turn on spell check" }
+lvim.builtin.which_key.mappings["m"] = {
+    name = "Markdown",
+    d = { ":InstantMarkdownPreview<CR>", "Instant Markdown Preview" },
+    m = { ":w<CR>:make<CR>", "Make" },
+}
+lvim.builtin.which_key.mappings["d"] = {
+    name = "Terminals",
+    v = { ":call VerticalTerminal()<CR>", "Vertical Terminal" },
+    h = { ":call HorizontalTerminal()<CR>", "Horizontal Terminal" },
 }
 
--- TODO: User Config for predefined plugins
+
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.terminal.insert_mappings = false
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "maintained"
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
-
--- generic LSP settings
--- you can set a custom on_attach function that will be used for all the language servers
--- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
 
 -- Additional Plugins
 lvim.plugins = {
@@ -99,50 +104,42 @@ lvim.plugins = {
     end,
     },
     { "RRethy/nvim-base16" },
+     event = "BufRead",
+    { "monaqa/dial.nvim",
+    config = function()
+      require("user.dial").config()
+    end,
+    },
 }
 
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- lvim.autocommands.custom_groups = {
---   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
--- }
+lvim.autocommands.custom_groups = {
+    { "FileType", "yaml", "setlocal ts=2 ai sw=2 sts=2" },
+    { "FileType", "java", "set makeprg=java\\ %" },
+}
 
--- Additional Leader bindings for WhichKey
 vim.cmd [[
-    nnoremap <silent> <ESC> :nohl<CR>
-    nnoremap Y y$
-    nnoremap n nzzzv
-    nnoremap N Nzzzv
-    nnoremap J mzJ`z
-    nnoremap <F1> <Nop>
-
-    inoremap , ,<C-g>u
-    inoremap . .<C-g>u
-    inoremap ! !<C-g>u
-    inoremap ? ?<C-g>u
-
     nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
     nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
-
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-
-    tnoremap <Esc> <C-\\><C-n>
 
     function! FixLastSpellingError()
        normal! mm[s1z='m""'
     endfunction
-    nnoremap <leader>sp :call FixLastSpellingError()<CR>
-    nnoremap <leader>ss :setlocal spell!<CR>
 
-    nnoremap <leader>md :InstantMarkdownPreview<CR>
-    nnoremap <leader>mm :make<CR>
+    function! VerticalTerminal()
+        :vsp | :terminal
+        :vertical resize 45
+        :setlocal nobuflisted
+    endfunction
 
-    autocmd FileType yaml setlocal ts=2 ai sw=2 sts=0
+    function! HorizontalTerminal()
+        :split | :terminal
+        :resize 5
+        :setlocal nobuflisted
+    endfunction
 
     let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
     let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
     let g:instant_markdown_browser = 'surf'
 
 ]]
+
