@@ -1,7 +1,39 @@
 local M = {}
 M.config = function()
     lvim.plugins = {
-    { "folke/tokyonight.nvim" },
+    { "folke/tokyonight.nvim",
+      config = function()
+        require("user/theme").tokyonight()
+        vim.cmd [[
+      colorscheme tokyonight
+      ]]
+      end,
+      cond = function()
+        local _time = os.date "*t"
+        return (_time.hour >= 0 and _time.hour < 7) or (_time.hour >= 11 and _time.hour < 17)
+      end,
+    },
+
+    {
+        "abzcoding/Catppuccino.nvim",
+            config = function()
+            require("user.theme").config()
+        end,
+        cond = function()
+            local _time = os.date "*t"
+            return (_time.hour >= 7 and _time.hour < 11)
+        end,
+    },
+    {
+      "NTBBloodbath/doom-one.nvim",
+      config = function()
+        vim.g.doom_one_italic_comments = true
+      end,
+        cond = function()
+        local _time = os.date "*t"
+        return (_time.hour >= 17 and _time.hour < 21)
+      end,
+    },
     { "ray-x/lsp_signature.nvim",
         config = function() require"lsp_signature".on_attach() end,
         event = "InsertEnter",
@@ -78,6 +110,7 @@ M.config = function()
     end,
     event = "BufRead",
     },
+    { "lervag/vimtex" },
 
 }
 
