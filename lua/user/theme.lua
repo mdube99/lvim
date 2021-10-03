@@ -2,7 +2,7 @@ local M = {}
 
 M.tokyonight = function()
   vim.g.tokyonight_dev = true
-  vim.g.tokyonight_style = "night"
+  vim.g.tokyonight_style = "storm"
   vim.g.tokyonight_sidebars = {
     "qf",
     "vista_kind",
