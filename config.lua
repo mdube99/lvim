@@ -6,23 +6,24 @@ vim.opt.mouse = ""
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.inccommand = "split" -- shows small split at the bottom of the screen when searching
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 4
 
 -- Lunarvim settings
 lvim.format_on_save = true
 lvim.lint_on_save = true
-lvim.colorscheme = "base16-onedark"
+lvim.colorscheme = "onedarker"
 
-require("user.theme").config()
-require("user.lualine").config()
+-- require("user.lualine").config()
+require("user.evilline").config()
 require("user.plugins").config()
 
 -- Plugin settings
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
+lvim.builtin.autopairs.active = true
 lvim.builtin.terminal.insert_mappings = true
 lvim.builtin.telescope.defaults.prompt_prefix = "   "
+lvim.builtin.treesitter.indent = { enable = true, disable = { "yaml", "python" } }
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "maintained"
@@ -61,30 +62,29 @@ lvim.builtin.which_key.mappings["f"] = {
     o = { "<Cmd>Telescope oldfiles<CR>", "Old Files" },
     h = { "<Cmd>Telescope command_history<CR>", "Command History" },
     p = { "<Cmd>Telescope projects<CR>", "Projects" },
-    w = { "<Cmd>Telescope live_grep<CR>", "Search for Word"}
+    w = { "<Cmd>Telescope live_grep<CR>", "Search for Word"},
+    v = { "<Cmd>Telescope vimwiki live_grep<CR>", "Search for Vimwiki"}
 }
+
 lvim.builtin.which_key.mappings.s.p = { ":call FixLastSpellingError()<CR>", "Fix last Spelling error" }
 lvim.builtin.which_key.mappings.s.s = { ":setlocal spell!<CR>", "Turn on spell check" }
 lvim.builtin.which_key.mappings["n"] = {
     name = "Number",
     n = { ":set norelativenumber!<CR>", "Toggle relativenumber" },
-
 }
+
 lvim.builtin.which_key.mappings["m"] = {
     name = "Markdown",
     d = { ":InstantMarkdownPreview<CR>", "Instant Markdown Preview" },
     m = { ":w<CR>:make<CR>", "Make" },
 }
-lvim.builtin.which_key.mappings["d"] = {
-    name = "Terminals",
-    v = { ":call VerticalTerminal()<CR>", "Vertical Terminal" },
-    h = { ":call HorizontalTerminal()<CR>", "Horizontal Terminal" },
-}
+
 lvim.builtin.which_key.mappings["w"] = {
     name = "Windows",
     v = { ":vsp<CR>", "Vertical Split" },
     h = { ":split<CR>", "Horizontal Split" },
 }
+
 lvim.builtin.which_key.mappings["t"] = {
   name = "Trouble",
   t = { "<cmd>TroubleToggle<cr>", "trouble" },
@@ -97,15 +97,25 @@ lvim.builtin.which_key.mappings["t"] = {
 lvim.builtin.which_key.mappings.b.P = { "<cmd>BufferPin<CR>", "Pin Buffer" }
 lvim.builtin.which_key.mappings.b.d = { "<cmd>bdelete<CR>", "Delete Buffer" }
 
+lvim.builtin.which_key.mappings.c = { "<cmd>Cheat<CR>", "Cheat.sh" }
+
 -- Additional Plugins
 
 lvim.autocommands.custom_groups = {
-    { "FileType", "yaml,json", "setlocal ts=2 ai sw=2 sts=2" },
-    { "FileType", "java", "set makeprg=java\\ %" },
     {
-      "Filetype",
-      "python",
-      "nnoremap <leader>r <cmd>lua require('core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>",
+        "FileType",
+        "yaml,json,tex",
+        "setlocal ts=2 ai sw=2 sts=2"
+    },
+    {
+        "FileType",
+        "java",
+        "set makeprg=java\\ %"
+    },
+    {
+        "Filetype",
+        "python",
+        "nnoremap <leader>r <cmd>lua require('core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>",
     },
     -- {
     --   "Filetype",
@@ -121,18 +131,6 @@ vim.cmd [[
 
     function! FixLastSpellingError()
        normal! mm[s1z='m""'
-    endfunction
-
-    function! VerticalTerminal()
-        :vsp | :terminal
-        :vertical resize 45
-        :setlocal nobuflisted
-    endfunction
-
-    function! HorizontalTerminal()
-        :split | :terminal
-        :resize 5
-        :setlocal nobuflisted
     endfunction
 
     let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
