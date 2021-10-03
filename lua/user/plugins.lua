@@ -1,9 +1,10 @@
 local M = {}
 M.config = function()
     lvim.plugins = {
-    { "folke/tokyonight.nvim",
+    { "abzcoding/tokyonight.nvim",
+      branch = "feature/vim-diagnostics",
       config = function()
-        require("user/theme").tokyonight()
+        require("user.theme").tokyonight()
         vim.cmd [[
       colorscheme tokyonight
       ]]
@@ -14,18 +15,16 @@ M.config = function()
       end,
     },
 
-    {
-        "abzcoding/Catppuccino.nvim",
-            config = function()
-            require("user.theme").config()
-        end,
-        cond = function()
-            local _time = os.date "*t"
-            return (_time.hour >= 7 and _time.hour < 11)
-        end,
+    { "Pocco81/Catppuccino.nvim",
+        config = function()
+        require("user.theme").config()
+    end,
+    cond = function()
+        local _time = os.date "*t"
+        return (_time.hour >= 7 and _time.hour < 11)
+    end,
     },
-    {
-      "NTBBloodbath/doom-one.nvim",
+    { "NTBBloodbath/doom-one.nvim",
       config = function()
         vim.g.doom_one_italic_comments = true
       end,
@@ -96,13 +95,6 @@ M.config = function()
       require("user.colorizer").config()
     end,
     },
-    { "RRethy/nvim-base16" },
-     event = "BufRead",
-    { "monaqa/dial.nvim",
-    config = function()
-      require("user.dial").config()
-    end,
-    },
     { "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
@@ -110,7 +102,22 @@ M.config = function()
     end,
     event = "BufRead",
     },
-    { "lervag/vimtex" },
+    {
+    "ElPiloto/telescope-vimwiki.nvim",
+    run = "make",
+    after = "telescope.nvim",
+    config = function()
+        require("telescope").load_extension "vimwiki"
+    end,
+    },
+    {
+      "RishabhRD/nvim-cheat.sh",
+    requires = "RishabhRD/popfix",
+    config = function()
+        vim.g.cheat_default_window_layout = "float"
+    end,
+    cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
+    },
 
 }
 
