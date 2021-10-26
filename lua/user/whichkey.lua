@@ -24,13 +24,17 @@ lvim.builtin.which_key.mappings["n"] = {
 lvim.builtin.which_key.mappings["m"] = {
     name = "Markdown",
     d = { ":InstantMarkdownPreview<CR>", "Instant Markdown Preview" },
+    g = { "<cmd>Glow<cr>", "Preview Markdown Inside Vim" },
+    b = { "<cmd>call BoldWord()<CR>", "Bold Word" },
+    l = { "<cmd>call BoldWord()<CR>", "Bold Line" },
     m = { ":w<CR>:make<CR>", "Make" },
 }
 
 lvim.builtin.which_key.mappings["w"] = {
     name = "Windows",
-    v = { ":vsp<CR>", "Vertical Split" },
-    h = { ":split<CR>", "Horizontal Split" },
+    v = { "<Cmd>vsp<CR>", "Vertical Split" },
+    h = { "<Cmd>split<CR>", "Horizontal Split" },
+    t = { "<Cmd>tabnew<CR>", "New Tab" },
 }
 
 lvim.builtin.which_key.mappings["t"] = {
@@ -42,10 +46,24 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
+
+lvim.builtin.which_key.mappings["h"] = {}
+lvim.builtin.which_key.mappings["h"] = {
+    name = "Harpoon",
+    m = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Mark File"},
+    q = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Toggle Quickmenu"},
+    y = { "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", "Toggle other quickmenu"},
+    }
 lvim.builtin.which_key.mappings.b.P = { "<cmd>BufferPin<CR>", "Pin Buffer" }
 lvim.builtin.which_key.mappings.b.d = { "<cmd>bdelete<CR>", "Delete Buffer" }
+lvim.builtin.which_key.mappings.b.t = { "<cmd>tabclose<CR>", "Close Tab" }
 
 lvim.builtin.which_key.mappings.c = { "<cmd>Cheat<CR>", "Cheat.sh" }
+lvim.builtin.which_key.mappings.r = {"<cmd>lua require('lvim.core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>", "Debug python"}
+
+-- Visual mappings
+lvim.builtin.which_key.vmappings.i = {"<cmd>norm S*<cr>", "Italicize Selection" }
+lvim.builtin.which_key.vmappings.b = {"<cmd>norm S*gvS*<cr>", "Bold Selection" }
 
 end
 return M
