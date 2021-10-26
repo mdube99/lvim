@@ -2,7 +2,7 @@ local M = {}
 
 M.tokyonight = function()
   vim.g.tokyonight_dev = true
-  vim.g.tokyonight_style = "storm"
+  vim.g.tokyonight_style = "night"
   vim.g.tokyonight_sidebars = {
     "qf",
     "vista_kind",
@@ -26,65 +26,6 @@ M.tokyonight = function()
   if _time.hour < 8 then
     vim.g.tokyonight_style = "night"
   end
-end
-
-M.catppuccino = function()
-  local catppuccino = require "catppuccino"
-  catppuccino.setup {
-    colorscheme = "dark_catppuccino",
-    transparency = false,
-    term_colors = false,
-    styles = {
-      comments = "italic",
-      functions = "NONE",
-      keywords = "italic",
-      strings = "NONE",
-      variables = "NONE",
-    },
-    integrations = {
-      treesitter = true,
-      native_lsp = {
-        enabled = true,
-        virtual_text = {
-          errors = "italic",
-          hints = "italic",
-          warnings = "italic",
-          information = "italic",
-        },
-        underlines = {
-          errors = "underline",
-          hints = "underline",
-          warnings = "underline",
-          information = "underline",
-        },
-      },
-      lsp_trouble = true,
-      lsp_saga = false,
-      gitgutter = false,
-      gitsigns = true,
-      telescope = true,
-      nvimtree = {
-        enabled = true,
-        show_root = true,
-      },
-      which_key = true,
-      indent_blankline = {
-        enabled = true,
-        colored_indent_levels = true,
-      },
-      dashboard = true,
-      neogit = false,
-      vim_sneak = false,
-      fern = false,
-      barbar = true,
-      bufferline = true,
-      markdown = true,
-      lightspeed = false,
-      ts_rainbow = false,
-      hop = true,
-    },
-  }
-  catppuccino.load()
 end
 
 -- Lualine
