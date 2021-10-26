@@ -5,32 +5,11 @@ M.config = function()
       branch = "feature/vim-diagnostics",
       config = function()
         require("user.theme").tokyonight()
-        vim.cmd [[
-      colorscheme tokyonight
-      ]]
       end,
-      cond = function()
-        local _time = os.date "*t"
-        return (_time.hour >= 0 and _time.hour < 7) or (_time.hour >= 11 and _time.hour < 17)
-      end,
-    },
-
-    { "Pocco81/Catppuccino.nvim",
-        config = function()
-        require("user.theme").config()
-    end,
-    cond = function()
-        local _time = os.date "*t"
-        return (_time.hour >= 7 and _time.hour < 11)
-    end,
     },
     { "NTBBloodbath/doom-one.nvim",
       config = function()
         vim.g.doom_one_italic_comments = true
-      end,
-        cond = function()
-        local _time = os.date "*t"
-        return (_time.hour >= 17 and _time.hour < 21)
       end,
     },
     { "ray-x/lsp_signature.nvim",
@@ -58,67 +37,91 @@ M.config = function()
     { "tpope/vim-fugitive" },
     { "tpope/vim-surround" },
     { "lambdalisue/suda.vim" },
+        cmd = "SudaWrite",
     { "kevinhwang91/nvim-bqf", event = "BufRead",
     config = function()
     require("bqf").setup({
-          auto_enable = true,
-          preview = {
-          win_height = 12,
-          win_vheight = 12,
-          delay_syntax = 80,
-          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-          },
-          func_map = {
-          vsplit = "",
-          ptogglemode = "z,",
-          stoggleup = "",
-          },
-          filter = {
-          fzf = {
-          },
-          },
-          })
+        auto_enable = true,
+        preview = {
+        win_height = 12,
+        win_vheight = 12,
+        delay_syntax = 80,
+        border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+        vsplit = "",
+        ptogglemode = "z,",
+        stoggleup = "",
+        },
+        filter = {
+        fzf = {
+          action_for = { ["ctrl-s"] = "split" },
+          extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+        },
+        },
+        })
     end,
     },
-    { "karb94/neoscroll.nvim",
+
+    {
+    "karb94/neoscroll.nvim",
     config = function()
         require("user.neoscroll").config()
     end,
     },
-    { "andymass/vim-matchup",
+
+    {
+    "andymass/vim-matchup",
         event = "CursorMoved", config = function()
         vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
     },
-    { "norcalli/nvim-colorizer.lua",
+    {
+    "norcalli/nvim-colorizer.lua",
     config = function()
       require("user.colorizer").config()
     end,
     },
-    { "folke/todo-comments.nvim",
+    {
+    "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
         require("todo-comments").setup()
     end,
     event = "BufRead",
     },
+    -- {
+    -- "ElPiloto/telescope-vimwiki.nvim",
+    -- run = "make",
+    -- after = "telescope.nvim",
+    -- config = function()
+    --     require("telescope").load_extension "vimwiki"
+    -- end,
+    -- },
     {
-    "ElPiloto/telescope-vimwiki.nvim",
-    run = "make",
-    after = "telescope.nvim",
-    config = function()
-        require("telescope").load_extension "vimwiki"
-    end,
-    },
-    {
-      "RishabhRD/nvim-cheat.sh",
+    "RishabhRD/nvim-cheat.sh",
     requires = "RishabhRD/popfix",
     config = function()
         vim.g.cheat_default_window_layout = "float"
     end,
     cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
     },
-
+    {
+      "akinsho/bufferline.nvim",
+      config = function()
+        require("user.bufferline").config()
+      end,
+        requires = "nvim-web-devicons",
+    },
+    {
+      "npxbr/glow.nvim",
+      ft = {"markdown"}
+      -- run = "yay -S glow"
+    },
+    {
+    "ThePrimeagen/harpoon",
+    requires = { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" },
+    }
 }
 
 end
