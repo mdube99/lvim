@@ -13,26 +13,26 @@ lvim.format_on_save = true
 lvim.lint_on_save = true
 lvim.colorscheme = "onedarker"
 
--- require("user.lualine").config()
-require("user.evilline").config()
+require("user.lualine").config()
 require("user.plugins").config()
-require("user.bufferline").config()
 require("user.whichkey").config()
 
--- Plugin settings
+-- Core settings
 lvim.builtin.dashboard.active = true
+lvim.builtin.bufferline.active = false
 lvim.builtin.terminal.active = true
 lvim.builtin.autopairs.active = true
 lvim.builtin.terminal.insert_mappings = true
 lvim.builtin.telescope.defaults.prompt_prefix = "   "
 lvim.builtin.treesitter.indent = { enable = true, disable = { "yaml", "python" } }
+vim.g.nvim_tree_indent_markers = 1
+
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "maintained"
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
--- autocmd VimResized * :wincmd =
 vim.g.vim_markdown_folding_disabled = true
 vim.g.instant_markdown_autostart = false
 
@@ -45,10 +45,14 @@ lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 lvim.keys.normal_mode["J"] = "mzJ`z"
 lvim.keys.normal_mode["<F1>"] = "<Nop>"
-lvim.keys.normal_mode["<TAB>"] = ":BufferNext<CR>"
-lvim.keys.normal_mode["<S-TAB>"] = ":BufferPrevious<CR>"
+lvim.keys.normal_mode["<TAB>"] = ":bnext<CR>"
+lvim.keys.normal_mode["<S-TAB>"] = ":bprev<CR>"
 -- back space to switch to alternative buffer with the cursor in the last position it was in the file
 lvim.keys.normal_mode["<bs>"] = "<bs> <c-^>`”zz"
+lvim.keys.normal_mode["<C-h>"] = "<cmd>lua require('harpoon.ui').nav_file(1)<CR>"
+lvim.keys.normal_mode["<C-j>"] = "<cmd>lua require('harpoon.ui').nav_file(2)<CR>"
+lvim.keys.normal_mode["<C-k>"] = "<cmd>lua require('harpoon.ui').nav_file(3)<CR>"
+lvim.keys.normal_mode["<C-l>"] = "<cmd>lua require('harpoon.ui').nav_file(4)<CR>"
 
 lvim.keys.insert_mode[","] = ",<C-g>u"
 lvim.keys.insert_mode["."] = ".<C-g>u"
@@ -71,7 +75,7 @@ lvim.autocommands.custom_groups = {
     {
         "Filetype",
         "python",
-        "nnoremap <leader>r <cmd>lua require('core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>",
+        "nnoremap <leader>r <cmd>lua require('lvim.core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>",
     },
     -- {
     --   "Filetype",
@@ -85,8 +89,12 @@ vim.cmd [[
     nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
     nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
+    function! BoldWord()
+        normal ysiw*w.*
+    endfunction
+
     function! FixLastSpellingError()
-       normal! mm[s1z='m""'
+        normal! mm[s1z='m""'
     endfunction
 
     let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
