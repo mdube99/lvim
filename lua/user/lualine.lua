@@ -38,6 +38,10 @@ local file_icon_colors = {
   LightBlue = "#5fd7ff",
 }
 
+local function clock()
+  return " " .. os.date "%I:%M"
+end
+
 local function get_file_info()
   return vim.fn.expand "%:t", vim.fn.expand "%:e"
 end
@@ -79,15 +83,15 @@ end
 M.config = function()
     local components = require("lvim.core.lualine.components")
     lvim.builtin.lualine.style = "lvim"
-    -- lvim.builtin.lualine.sections.lualine_a = { "mode" }
+    lvim.builtin.lualine.sections.lualine_a = { "mode" }
     -- lvim.builtin.lualine.sections.lualine_a = {  }
-    lvim.builtin.lualine.sections.lualine_b = { "mode" }
+    -- lvim.builtin.lualine.sections.lualine_b = { "mode" }
     -- lvim.builtin.lualine.sections.lualine_c = { "filename" }
-    -- lvim.builtin.lualine.sections.lualine_d = { components.diff }
+    -- lvim.builtin.lualine.sections.lualine_d = { components.diagnostics }
     -- lvim.builtin.lualine.sections.lualine_w = { "encoding", "fileformat", "filetype" }
     lvim.builtin.lualine.sections.lualine_x = { components.lsp }
-    -- lvim.builtin.lualine.sections.lualine_y = { "filetype" }
-    -- lvim.builtin.lualine.sections.lualine_z = { clock, components.scrollbar }
+    lvim.builtin.lualine.sections.lualine_y = { "filetype" }
+    lvim.builtin.lualine.sections.lualine_z = { clock, components.scrollbar }
     lvim.builtin.lualine.options.component_separators = { "│", "│" }
     lvim.builtin.lualine.options.section_separators = { "", "" }
     lvim.builtin.lualine.extensions = { "quickfix" }

@@ -11,7 +11,6 @@ lvim.builtin.which_key.mappings["f"] = {
     h = { "<Cmd>Telescope command_history<CR>", "Command History" },
     p = { "<Cmd>Telescope projects<CR>", "Projects" },
     w = { "<Cmd>Telescope live_grep<CR>", "Search for Word"},
-    v = { "<Cmd>Telescope vimwiki live_grep<CR>", "Search for Vimwiki"}
 }
 
 lvim.builtin.which_key.mappings.s.p = { ":call FixLastSpellingError()<CR>", "Fix last Spelling error" }
@@ -28,6 +27,7 @@ lvim.builtin.which_key.mappings["m"] = {
     b = { "<cmd>call BoldWord()<CR>", "Bold Word" },
     l = { "<cmd>call BoldWord()<CR>", "Bold Line" },
     m = { ":w<CR>:make<CR>", "Make" },
+    t = { ":VimwikiTable ", "Vimwiki Table"},
 }
 
 lvim.builtin.which_key.mappings["w"] = {
@@ -35,17 +35,19 @@ lvim.builtin.which_key.mappings["w"] = {
     v = { "<Cmd>vsp<CR>", "Vertical Split" },
     h = { "<Cmd>split<CR>", "Horizontal Split" },
     t = { "<Cmd>tabnew<CR>", "New Tab" },
+    m = { "<Cmd>FocusMaximise<CR>", "Toggle Split Maximize" },
+    f = { "<Cmd>FocusToggle<CR>", "Focus Toggle" },
 }
 
-lvim.builtin.which_key.mappings["t"] = {
-  name = "Trouble",
-  t = { "<cmd>TroubleToggle<cr>", "trouble" },
-  w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
-  d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
-  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-}
+-- lvim.builtin.which_key.mappings["t"] = {
+--   name = "Trouble",
+--   t = { "<cmd>TroubleToggle<cr>", "trouble" },
+--   w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+--   d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+--   q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+--   l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+--   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+-- }
 
 lvim.builtin.which_key.mappings["h"] = {}
 lvim.builtin.which_key.mappings["h"] = {
@@ -59,7 +61,8 @@ lvim.builtin.which_key.mappings.b.d = { "<cmd>bdelete<CR>", "Delete Buffer" }
 lvim.builtin.which_key.mappings.b.t = { "<cmd>tabclose<CR>", "Close Tab" }
 
 lvim.builtin.which_key.mappings.c = { "<cmd>Cheat<CR>", "Cheat.sh" }
-lvim.builtin.which_key.mappings.r = {"<cmd>lua require('lvim.core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>", "Debug python"}
+-- lvim.builtin.which_key.mappings.r = {"<cmd>lua require('lvim.core.terminal')._exec_toggle('python " .. vim.fn.expand "%" .. ";read')<CR>", "Debug python"}
+lvim.builtin.which_key.mappings.o = {"<cmd>SymbolsOutline<CR>", "Symbols Outline" }
 
 -- Visual mappings
 lvim.builtin.which_key.vmappings.i = {"<cmd>norm S*<cr>", "Italicize Selection" }

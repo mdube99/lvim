@@ -7,28 +7,29 @@ M.config = function()
         require("user.theme").tokyonight()
       end,
     },
-    { "NTBBloodbath/doom-one.nvim",
-      config = function()
-        vim.g.doom_one_italic_comments = true
-      end,
-    },
     { "ray-x/lsp_signature.nvim",
-        config = function() require"lsp_signature".on_attach() end,
-        event = "InsertEnter",
-    },
-    { "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
         config = function()
-            require("trouble").setup()
+        require("user.lsp_signature").config()
         end,
+        event = "BufRead",
     },
+    -- { "folke/trouble.nvim",
+    --     requires = "kyazdani42/nvim-web-devicons",
+    --     config = function()
+    --         require("trouble").setup()
+    --     end,
+    -- },
     { "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",
     },
-    -- Markdown stuff
-    { "vimwiki/vimwiki" },
-    { "instant-markdown/vim-instant-markdown" },
-    -- Better blankline
+    {
+    "vimwiki/vimwiki",
+      -- ft = {"markdown"},
+    },
+    {
+    "instant-markdown/vim-instant-markdown",
+      ft = {"markdown"},
+    },
     { "lukas-reineke/indent-blankline.nvim",
         config = function()
             require "user.blankline"
@@ -86,24 +87,17 @@ M.config = function()
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
-        require("todo-comments").setup()
+        require("user.todo_comments").config()
     end,
     event = "BufRead",
     },
-    -- {
-    -- "ElPiloto/telescope-vimwiki.nvim",
-    -- run = "make",
-    -- after = "telescope.nvim",
-    -- config = function()
-    --     require("telescope").load_extension "vimwiki"
-    -- end,
-    -- },
     {
     "RishabhRD/nvim-cheat.sh",
     requires = "RishabhRD/popfix",
     config = function()
-        vim.g.cheat_default_window_layout = "float"
+        vim.g.cheat_default_window_layout = "split"
     end,
+    opt = true,
     cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
     },
     {
@@ -116,12 +110,10 @@ M.config = function()
     {
       "npxbr/glow.nvim",
       ft = {"markdown"}
-      -- run = "yay -S glow"
     },
     {
-    "ThePrimeagen/harpoon",
-    requires = { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" },
-    }
+    "beauwilliams/focus.nvim", config = function() require("focus").setup({signcolumn = false}) end,
+    },
 }
 
 end
