@@ -22,12 +22,13 @@ lvim.builtin.which_key.mappings["n"] = {
 
 lvim.builtin.which_key.mappings["m"] = {
     name = "Markdown",
-    d = { ":InstantMarkdownPreview<CR>", "Instant Markdown Preview" },
+    d = { "<cmd>MarkdownPreview<CR>", "Instant Markdown Preview" },
     g = { "<cmd>Glow<cr>", "Preview Markdown Inside Vim" },
     b = { "<cmd>call BoldWord()<CR>", "Bold Word" },
     l = { "<cmd>call BoldWord()<CR>", "Bold Line" },
-    m = { ":w<CR>:make<CR>", "Make" },
-    t = { ":VimwikiTable ", "Vimwiki Table"},
+    m = { "<cmd>w<CR>:make<CR>", "Make" },
+    -- t = { "<cmd>VimwikiTable ", "Vimwiki Table"},
+    i = { "<cmd>call PasteImg()<cr>", "Paste Image"},
 }
 
 lvim.builtin.which_key.mappings["w"] = {

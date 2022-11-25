@@ -7,64 +7,99 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.inccommand = "split" -- shows small split at the bottom of the screen when searching
 vim.opt.foldlevel = 4
+vim.opt.colorcolumn="80"
 
 -- Lunarvim settings
-lvim.format_on_save = true
-lvim.lint_on_save = true
-lvim.colorscheme = "tokyonight"
-vim.g.tokyonight_style = "night"
+lvim.format_on_save = false
+lvim.lint_on_save = false
+lvim.colorscheme = "tokyonight-night"
 
 require("user.lualine").config()
 require("user.plugins").config()
 require("user.whichkey").config()
+require("user.telescope")
 
 -- Core settings
-lvim.builtin.dashboard.active = true
-lvim.builtin.bufferline.active = false
+lvim.builtin.alpha.active = true
+lvim.builtin.bufferline.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.autopairs.active = true
 lvim.builtin.terminal.insert_mappings = true
-lvim.builtin.telescope.defaults.prompt_prefix = "   "
-lvim.builtin.telescope.defaults.layout_strategy = "horizontal"
-lvim.builtin.telescope.defaults.file_ignore_patterns = {
-    "vendor/*",
-    "%.lock",
-    "__pycache__/*",
-    "%.sqlite3",
-    "%.ipynb",
-    "node_modules/*",
-    "%.jpg",
-    "%.jpeg",
-    "%.png",
-    "%.svg",
-    "%.otf",
-    "%.ttf",
-    ".git/",
-    "%.webp",
-    ".dart_tool/",
-    ".github/",
-    ".gradle/",
-    ".idea/",
-    ".settings/",
-    ".vscode/",
-    "__pycache__/",
-    "build/",
-    "env/",
-    "gradle/",
-    "node_modules/",
-    "target/",
-}
-lvim.builtin.treesitter.indent = { enable = true, disable = { "yaml", "python" } }
-vim.g.nvim_tree_indent_markers = 1
-
-
+--
 -- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = "maintained"
-lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
+lvim.builtin.treesitter.incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<CR>',
+      scope_incremental = '<CR>',
+      node_incremental = '<TAB>',
+      node_decremental = '<S-TAB>',
+    },
+}
+lvim.builtin.treesitter.textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["al"] = "@loop.outer",
+        ["il"] = "@loop.inner",
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader><M-a>"] = "@parameter.inner",
+        ["<leader><M-f>"] = "@function.outer",
+        ["<leader><M-e>"] = "@element",
+      },
+      swap_previous = {
+        ["<leader><M-A>"] = "@parameter.inner",
+        ["<leader><M-F>"] = "@function.outer",
+        ["<leader><M-E>"] = "@element",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]f"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]F"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[f"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[F"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+}
+lvim.builtin.treesitter.textsubjects = {
+    textsubjects = {
+        enable = true,
+        keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+        }
+    },
+}
+
+
 vim.g.vim_markdown_folding_disabled = true
-vim.g.instant_markdown_autostart = false
 
 -- keymappings
 lvim.leader = "space"
@@ -72,7 +107,6 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<S-l>"] = nil
 lvim.keys.normal_mode["<S-h>"] = nil
 lvim.keys.normal_mode["<esc>"] = "<cmd>nohlsearch<cr>"
-lvim.keys.normal_mode["Y"] = "y$"
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 lvim.keys.normal_mode["J"] = "mzJ`z"
@@ -110,11 +144,23 @@ lvim.autocommands.custom_groups = {
         "BufRead,BufNewFile",
         "config",
         "set filetype=bash"
+    },
+    {
+        "FileType",
+        "tex,markdown,vimwiki,md",
+        "setlocal textwidth=80"
     }
     -- {
     --   "Filetype",
     --   "java",
     --   "nnoremap <leader>r <cmd>lua require('core.terminal')._exec_toggle('java " .. vim.fn.expand "%" .. ";read')<CR>",
+    -- },
+    -- {
+    --   "Filetype",
+    --   "python",
+    --   "nnoremap <leader>r <cmd>lua require('lvim.core.terminal')._exec_toggle({cmd='python "
+    --     .. vim.fn.expand "%"
+    --     .. ";read',count=2,direction='float'})<CR>",
     -- },
 
 }
@@ -122,6 +168,7 @@ lvim.autocommands.custom_groups = {
 vim.cmd [[
     nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
     nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+    vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
     function! BoldWord()
         normal ysiw*w.*
@@ -137,9 +184,7 @@ vim.cmd [[
     endfunction
     xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
-
     let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
     let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-    let g:instant_markdown_browser = 'surf'
 
 ]]

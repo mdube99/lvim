@@ -1,12 +1,7 @@
 local M = {}
 M.config = function()
     lvim.plugins = {
-    { "abzcoding/tokyonight.nvim",
-      branch = "feature/vim-diagnostics",
-      config = function()
-        require("user.theme").tokyonight()
-      end,
-    },
+    { "abzcoding/tokyonight.nvim" },
     { "ray-x/lsp_signature.nvim",
         config = function()
         require("user.lsp_signature").config()
@@ -26,10 +21,7 @@ M.config = function()
     "vimwiki/vimwiki",
       -- ft = {"markdown"},
     },
-    {
-    "instant-markdown/vim-instant-markdown",
-      ft = {"markdown"},
-    },
+      "iamcco/markdown-preview.nvim",
     { "lukas-reineke/indent-blankline.nvim",
         config = function()
             require "user.blankline"
@@ -92,27 +84,16 @@ M.config = function()
     event = "BufRead",
     },
     {
-    "RishabhRD/nvim-cheat.sh",
-    requires = "RishabhRD/popfix",
-    config = function()
-        vim.g.cheat_default_window_layout = "split"
-    end,
-    opt = true,
-    cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
-    },
-    {
-      "akinsho/bufferline.nvim",
+      "RishabhRD/nvim-cheat.sh",
+      requires = "RishabhRD/popfix",
       config = function()
-        require("user.bufferline").config()
+        vim.g.cheat_default_window_layout = "vertical_split"
       end,
-        requires = "nvim-web-devicons",
+      opt = true,
+      cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
     },
     {
-      "npxbr/glow.nvim",
-      ft = {"markdown"}
-    },
-    {
-    "beauwilliams/focus.nvim", config = function() require("focus").setup({signcolumn = false}) end,
+    "christianchiarulli/nvim-gps", branch = "text_hl"
     },
 }
 
