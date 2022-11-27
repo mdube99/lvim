@@ -25,6 +25,7 @@ lvim.builtin.bufferline.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.autopairs.active = true
 lvim.builtin.terminal.insert_mappings = true
+lvim.builtin.terminal.open_mapping = [[<C-t>]]
 --
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.highlight.enabled = true
@@ -128,40 +129,15 @@ lvim.keys.insert_mode["?"] = "?<C-g>u"
 
 -- Additional Plugins
 
-lvim.autocommands.custom_groups = {
+lvim.autocommands = {
     {
-        "FileType",
-        "yaml,json,tex",
-        "setlocal ts=2 ai sw=2 sts=2"
-    },
-    {
-        "FileType",
-        "java",
-        "set makeprg=java\\ %"
-    },
-    -- For i3 config
-    {
-        "BufRead,BufNewFile",
-        "config",
-        "set filetype=bash"
-    },
-    {
-        "FileType",
-        "tex,markdown,vimwiki,md",
-        "setlocal textwidth=80"
-    }
-    -- {
-    --   "Filetype",
-    --   "java",
-    --   "nnoremap <leader>r <cmd>lua require('core.terminal')._exec_toggle('java " .. vim.fn.expand "%" .. ";read')<CR>",
-    -- },
-    -- {
-    --   "Filetype",
-    --   "python",
-    --   "nnoremap <leader>r <cmd>lua require('lvim.core.terminal')._exec_toggle({cmd='python "
-    --     .. vim.fn.expand "%"
-    --     .. ";read',count=2,direction='float'})<CR>",
-    -- },
+        "BufEnter", -- see `:h autocmd-events`
+        { -- this table is passed verbatim as `opts` to `nvim_create_autocmd`
+            pattern = { "*.tex", "*.yaml", "*.json" }, -- see `:h autocmd-events`
+            command = "setlocal ts=2 ai sw=2 sts=2",
+        }
+}
+
 
 }
 
