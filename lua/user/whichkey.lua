@@ -50,13 +50,6 @@ lvim.builtin.which_key.mappings["w"] = {
 --   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 -- }
 
-lvim.builtin.which_key.mappings["h"] = {}
-lvim.builtin.which_key.mappings["h"] = {
-    name = "Harpoon",
-    m = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Mark File"},
-    q = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Toggle Quickmenu"},
-    y = { "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", "Toggle other quickmenu"},
-    }
 lvim.builtin.which_key.mappings.b.P = { "<cmd>BufferPin<CR>", "Pin Buffer" }
 lvim.builtin.which_key.mappings.b.d = { "<cmd>bdelete<CR>", "Delete Buffer" }
 lvim.builtin.which_key.mappings.b.t = { "<cmd>tabclose<CR>", "Close Tab" }
