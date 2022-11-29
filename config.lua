@@ -133,7 +133,7 @@ lvim.autocommands = {
     {
         "BufEnter", -- see `:h autocmd-events`
         { -- this table is passed verbatim as `opts` to `nvim_create_autocmd`
-            pattern = { "*.tex", "*.yaml", "*.json" }, -- see `:h autocmd-events`
+            pattern = { "*.tex", "*.yaml", "*.json", "*.html", "*.php" }, -- see `:h autocmd-events`
             command = "setlocal ts=2 ai sw=2 sts=2",
         }
 }
