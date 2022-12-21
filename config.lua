@@ -12,10 +12,11 @@ vim.opt.colorcolumn="80"
 -- Lunarvim settings
 lvim.format_on_save = false
 lvim.lint_on_save = false
-lvim.colorscheme = "tokyonight-night"
+-- lvim.colorscheme = "tokyonight-night"
+lvim.colorscheme = "darkplus"
 
 require("user.lualine").config()
-require("user.plugins").config()
+require("user.plugins")
 require("user.whichkey").config()
 require("user.telescope")
 
@@ -53,39 +54,6 @@ lvim.builtin.treesitter.textobjects = {
         ["il"] = "@loop.inner",
         ["aa"] = "@parameter.outer",
         ["ia"] = "@parameter.inner",
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader><M-a>"] = "@parameter.inner",
-        ["<leader><M-f>"] = "@function.outer",
-        ["<leader><M-e>"] = "@element",
-      },
-      swap_previous = {
-        ["<leader><M-A>"] = "@parameter.inner",
-        ["<leader><M-F>"] = "@function.outer",
-        ["<leader><M-E>"] = "@element",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]f"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]F"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[f"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[F"] = "@function.outer",
-        ["[]"] = "@class.outer",
       },
     },
 }
