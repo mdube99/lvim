@@ -8,15 +8,6 @@ M.config = function()
         end,
         event = "BufRead",
     },
-    -- { "folke/trouble.nvim",
-    --     requires = "kyazdani42/nvim-web-devicons",
-    --     config = function()
-    --         require("trouble").setup()
-    --     end,
-    -- },
-    { "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-    },
     {
     "vimwiki/vimwiki",
       -- ft = {"markdown"},
@@ -31,31 +22,6 @@ M.config = function()
     { "tpope/vim-surround" },
     { "lambdalisue/suda.vim" },
         cmd = "SudaWrite",
-    { "kevinhwang91/nvim-bqf", event = "BufRead",
-    config = function()
-    require("bqf").setup({
-        auto_enable = true,
-        preview = {
-        win_height = 12,
-        win_vheight = 12,
-        delay_syntax = 80,
-        border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-        },
-        func_map = {
-        vsplit = "",
-        ptogglemode = "z,",
-        stoggleup = "",
-        },
-        filter = {
-        fzf = {
-          action_for = { ["ctrl-s"] = "split" },
-          extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-        },
-        },
-        })
-    end,
-    },
-
     {
     "karb94/neoscroll.nvim",
     config = function()
@@ -63,12 +29,6 @@ M.config = function()
     end,
     },
 
-    {
-    "andymass/vim-matchup",
-        event = "CursorMoved", config = function()
-        vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
-    },
     {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -91,9 +51,6 @@ M.config = function()
       end,
       opt = true,
       cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
-    },
-    {
-    "christianchiarulli/nvim-gps", branch = "text_hl"
     },
 }
 
