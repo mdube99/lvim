@@ -1,5 +1,3 @@
-local M = {}
-M.config = function()
     lvim.plugins = {
     { "abzcoding/tokyonight.nvim" },
     { "ray-x/lsp_signature.nvim",
@@ -53,7 +51,3 @@ M.config = function()
       cmd = { "Cheat", "CheatWithoutComments", "CheatList", "CheatListWithoutComments" },
     },
 }
-
-end
-
-return M
