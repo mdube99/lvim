@@ -12,6 +12,8 @@ require("user.options")
 
 -- Core settings
 lvim.builtin.alpha.active = true
+lvim.builtin.nvimtree.active = false
+lvim.builtin.lir.active = false
 lvim.builtin.bufferline.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.autopairs.active = true
