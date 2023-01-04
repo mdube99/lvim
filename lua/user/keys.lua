@@ -5,6 +5,7 @@ vim.g.mapleader = " "
 -- Get rid of lvim implementation of S-l and S-h
 lvim.keys.normal_mode["<S-l>"] = nil
 lvim.keys.normal_mode["<S-h>"] = nil
+lvim.keys.normal_mode["gv"] = nil
 
 vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<cr>")
 vim.keymap.set("n", "n", "nzzzv")
