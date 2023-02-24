@@ -1,15 +1,17 @@
     lvim.plugins = {
+    { "tiagovla/tokyodark.nvim"},
     { "lunarvim/darkplus.nvim" },
+    { "ellisonleao/gruvbox.nvim" },
     { "ray-x/lsp_signature.nvim",
         config = function()
         require("user.lsp_signature").config()
         end,
         event = "BufRead",
     },
-    {
-    "vimwiki/vimwiki",
-      -- ft = {"markdown"},
-    },
+    -- {
+    -- "vimwiki/vimwiki",
+    --   -- ft = {"markdown"},
+    -- },
     { "tpope/vim-fugitive" },
     { "tpope/vim-surround" },
     { "lambdalisue/suda.vim" },
