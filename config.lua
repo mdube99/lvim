@@ -1,7 +1,8 @@
 -- Lunarvim settings
 lvim.format_on_save = false
 lvim.lint_on_save = false
-lvim.colorscheme = "darkplus"
+-- lvim.colorscheme = "tokyonight-night"
+lvim.colorscheme = "tokyodark"
 
 require("user.lualine").config()
 require("user.plugins")
